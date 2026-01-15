@@ -1,0 +1,130 @@
+/* VaxTrace Professional Healthcare Theme */
+:root {
+  --primary-blue: #1a73e8;
+  --deep-navy: #0d2137;
+  --soft-teal: #e0f2f1;
+  --white: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Authentic Healthcare Gradient */
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background-attachment: fixed;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.signup-container {
+  width: 100%;
+  max-width: 380px; /* Reduced width for a sleeker look */
+  padding: 25px 30px; /* Tighter padding to prevent overflow */
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px); /* Modern frosted glass effect */
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.signup-title {
+  color: var(--deep-navy);
+  font-size: 1.5rem; /* Smaller, more elegant size */
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Reduced gap between elements */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #5f6368;
+  font-size: 0.85rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  padding: 10px 14px; /* Slimmer inputs */
+  border: 1.5px solid #dadce0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--primary-blue);
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+/* Radio buttons container - made horizontal to save vertical space */
+.form-group > label:first-child {
+  margin-bottom: 4px;
+}
+
+.radio-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.form-group-radio {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1.5px solid #dadce0;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+  transition: 0.2s;
+}
+
+.form-group-radio:has(input:checked) {
+  border-color: var(--primary-blue);
+  background-color: #f1f7fe;
+  color: var(--primary-blue);
+}
+
+.form-group-radio label {
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Slimmer Action Button */
+.form-btn button {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.form-btn button:hover {
+  background: #1557b0;
+}
