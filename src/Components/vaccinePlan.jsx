@@ -1,7 +1,18 @@
+import { useState } from "react";
+import UpdateDialog from "./UpdateVaccineModal";
 
 function VaccineList({ vaccines }) {
+  const [showDialog, setShowDialog] = useState(false);
 
-  
+  const [vaccineList, setVaccineList] = useState(vaccines);
+
+  const handleSave = (updatedVaccine) => {
+  const updatedList = vaccineList.map((v) =>
+    v.id === updatedVaccine.id ? updatedVaccine : v
+  );
+
+  setVaccineList(updatedList);
+};
 
 
   return (
@@ -11,36 +22,52 @@ function VaccineList({ vaccines }) {
       {vaccines.length === 0 ? (
         <p>No vaccines found</p>
       ) : (
-        <table border="1" cellPadding="10">
-          <thead>
-            <tr>
-              <th>Vaccine Name</th>
-              <th>Dose</th>
-              <th>Due Date</th>
-              <th>Vaccine Given On</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {vaccines.map((vaccine, index) => (
-              <tr key={index}>
-                <td>{vaccine.vaccine_name}</td>
-                <td>{vaccine.dose_number}</td>
-                <td>{vaccine.due_date}</td>
-                <td>{vaccine.administered_date}</td>
-                <td>{vaccine.status}</td>
-                <td> <button onClick={handleUpdate}>Update</button> </td>
+        <>
+          <table border="1" cellPadding="10">
+            <thead>
+              <tr>
+                <th>Vaccine Name</th>
+                <th>Dose</th>
+                <th>Due Date</th>
+                <th>Vaccine Given On</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {vaccines.map((vaccine, index) => (
+                <tr key={index}>
+                  <td>{vaccine.vaccine_name}</td>
+                  <td>{vaccine.dose_number}</td>
+                  <td>{vaccine.due_date}</td>
+                  <td>{vaccine.administered_date}</td>
+                  <td>{vaccine.status}</td>
+                  <td>
+                    <button onClick={() =>{
+                      setSelectedVaccine(vaccine);
+                      setShowDialog(true);
+                    } }>
+                      Update
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {showDialog && (
+            <UpdateDialog   vaccine={selectedVaccine} 
+                            onSave={handleSave}
+                            onClose={() => setShowDialog(false)} />
+          )}
+        </>
       )}
     </div>
   );
 }
-export default VaccineList
+
+export default VaccineList;
 
 
 

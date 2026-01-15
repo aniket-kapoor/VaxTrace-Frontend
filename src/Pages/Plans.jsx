@@ -78,7 +78,7 @@ function Plans() {
             {plan && (
                 <>
                  <PatientInfo plan={plan} />
-                 <VaccineList vaccines={plan.vaccines} />
+                 <VaccineList vaccines={plan.vaccines}  />
                 </>
             )}
 
