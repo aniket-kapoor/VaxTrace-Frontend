@@ -1,130 +1,230 @@
-// import { Link } from "react-router-dom";
-
-// function Navbar() {
-
-//     return (
-//         <nav className="navbar">
-//             <h2 className="logo">VaxTrace</h2>
-
-//             <ul className="nav-links">
-
-
-//                 <li>
-//                     <Link to="/">Home</Link>
-//                 </li>
-
-//                 <li>
-//                     <Link to="/plans">Plans</Link>
-//                 </li>
-
-//                 <li>
-//                     <Link to="/create/patient">Patients</Link>
-//                 </li>
-
-
-
-
-
-               
-//             </ul>
-//         </nav>
-//     );
-// }
-
-// export default Navbar;
-
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  const [isHovered, setIsHovered] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const dropdownRef = useRef(null);
+
+  // ✅ Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // ✅ Toggle dropdown on click
+  const handleDropdownClick = (dropdownName) => {
+    setOpenDropdown((prev) => (prev === dropdownName ? null : dropdownName));
+  };
 
   return (
     <nav style={styles.navbar}>
+      {/* Logo */}
       <div style={styles.logoContainer}>
-        <h2 style={styles.logo}>Vax<span>Trace</span></h2>
+        <h2 style={styles.logo}>
+          Vax<span style={styles.logoSpan}>Trace</span>
+        </h2>
       </div>
 
-      <ul style={styles.navLinks}>
-        <li 
-          onMouseEnter={() => setIsHovered('home')} 
-          onMouseLeave={() => setIsHovered(null)}
-        >
-          <Link to="/" style={{
-            ...styles.link, 
-            color: isHovered === 'home' ? '#2563eb' : '#475569'
-          }}>Home</Link>
-        </li>
-
-        <li 
-          onMouseEnter={() => setIsHovered('plans')} 
-          onMouseLeave={() => setIsHovered(null)}
-        >
-          <Link to="/plans" style={{
-            ...styles.link, 
-            color: isHovered === 'plans' ? '#2563eb' : '#475569'
-          }}>Plans</Link>
-        </li>
-
-        <li 
-          onMouseEnter={() => setIsHovered('patients')} 
-          onMouseLeave={() => setIsHovered(null)}
-        >
-          <Link to="/create/patient" style={styles.patientButton}>
-            Patient Portal
+      {/* Links */}
+      <ul style={styles.navLinks} ref={dropdownRef}>
+        {/* Home */}
+        <li>
+          <Link to="/" style={styles.link} onClick={() => setOpenDropdown(null)}>
+            Home
           </Link>
+        </li>
+
+        {/* ✅ Patients Dropdown */}
+        <li style={styles.dropdownWrapper}>
+          <span
+            style={styles.link}
+            onClick={() => handleDropdownClick("patients")}
+          >
+            Patients ⬇
+          </span>
+
+          {openDropdown === "patients" && (
+            <div style={styles.dropdownMenu}>
+              <Link
+                to="/create/patient"
+                style={styles.dropdownItem}
+                onClick={() => setOpenDropdown(null)}
+              >
+                Create Patient Account
+              </Link>
+
+              <Link
+                to="/search/patient"
+                style={styles.dropdownItem}
+                onClick={() => setOpenDropdown(null)}
+              >
+                Search Patient Profile
+              </Link>
+
+              <Link
+                to="/deactivate/patient"
+                style={styles.dropdownItem}
+                onClick={() => setOpenDropdown(null)}
+              >
+                Deactivate Patient Account
+              </Link>
+            </div>
+          )}
+        </li>
+
+        {/* Vaccine Schedule */}
+        <li>
+          <Link
+            to="/plans"
+            style={styles.link}
+            onClick={() => setOpenDropdown(null)}
+          >
+            Vaccine Schedule
+          </Link>
+        </li>
+
+        {/* ✅ Profile Dropdown */}
+        <li style={styles.dropdownWrapper}>
+          <span
+            style={styles.profileButton}
+            onClick={() => handleDropdownClick("profile")}
+          >
+            Profile ⬇
+          </span>
+
+          {openDropdown === "profile" && (
+            <div style={styles.dropdownMenuRight}>
+              <Link
+                to="/my-account"
+                style={styles.dropdownItem}
+                onClick={() => setOpenDropdown(null)}
+              >
+                My Account
+              </Link>
+
+              <Link
+                to="/logout"
+                style={styles.dropdownItem}
+                onClick={() => setOpenDropdown(null)}
+              >
+                Logout
+              </Link>
+            </div>
+          )}
         </li>
       </ul>
     </nav>
   );
 }
 
+export default Navbar;
+
 const styles = {
   navbar: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '15px 10%',
-    backgroundColor: '#ffffff',
-    borderBottom: '1px solid #e2e8f0',
-    position: 'sticky',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "15px 30px",
+    background: "#f8fafc",
+    boxShadow: "0px 2px 10px rgba(0,0,0,0.1)",
+    position: "sticky",
     top: 0,
     zIndex: 1000,
   },
+
   logoContainer: {
-    cursor: 'pointer',
+    display: "flex",
+    alignItems: "center",
   },
+
   logo: {
-    fontSize: '1.6rem',
-    fontWeight: '800',
-    color: '#0f172a',
-    margin: 0,
-    letterSpacing: '-0.5px',
+    fontSize: "22px",
+    fontWeight: "bold",
+    color: "#0f172a",
+    cursor: "pointer",
   },
+
+  logoSpan: {
+    color: "#2563eb",
+  },
+
   navLinks: {
-    listStyle: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '30px',
+    display: "flex",
+    gap: "25px",
+    listStyle: "none",
     margin: 0,
     padding: 0,
+    alignItems: "center",
   },
-  link: {
-    textDecoration: 'none',
-    fontSize: '1rem',
-    fontWeight: '500',
-    transition: 'color 0.2s ease',
-  },
-  patientButton: {
-    textDecoration: 'none',
-    backgroundColor: '#2563eb',
-    color: '#ffffff',
-    padding: '10px 20px',
-    borderRadius: '6px',
-    fontSize: '0.95rem',
-    fontWeight: '600',
-    transition: 'background-color 0.2s ease',
-  }
-};
 
-export default Navbar;
+  link: {
+    textDecoration: "none",
+    fontSize: "16px",
+    fontWeight: "500",
+    color: "#475569",
+    cursor: "pointer",
+    padding: "8px 10px",
+    borderRadius: "6px",
+    userSelect: "none",
+  },
+
+  dropdownWrapper: {
+    position: "relative",
+  },
+
+  dropdownMenu: {
+    position: "absolute",
+    top: "42px",
+    left: 0,
+    background: "#ffffff",
+    borderRadius: "10px",
+    boxShadow: "0px 5px 15px rgba(0,0,0,0.15)",
+    padding: "10px 0",
+    minWidth: "230px",
+    display: "flex",
+    flexDirection: "column",
+    zIndex: 999,
+  },
+
+  dropdownMenuRight: {
+    position: "absolute",
+    top: "42px",
+    right: 0,
+    background: "#ffffff",
+    borderRadius: "10px",
+    boxShadow: "0px 5px 15px rgba(0,0,0,0.15)",
+    padding: "10px 0",
+    minWidth: "180px",
+    display: "flex",
+    flexDirection: "column",
+    zIndex: 999,
+  },
+
+  dropdownItem: {
+    textDecoration: "none",
+    padding: "10px 15px",
+    fontSize: "14px",
+    color: "#334155",
+    cursor: "pointer",
+  },
+
+  profileButton: {
+    fontSize: "16px",
+    fontWeight: "500",
+    padding: "8px 14px",
+    borderRadius: "8px",
+    background: "#2563eb",
+    color: "#ffffff",
+    cursor: "pointer",
+    userSelect: "none",
+  },
+};

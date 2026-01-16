@@ -1,27 +1,62 @@
 import { useState } from "react";
+import { BASE_URL } from "../config/api";
+import { useEffect } from "react";
 
-function UpdateDialog({ vaccine,onSave, onClose}) {
 
-    const [date, setDate] = useState(vaccine.administered_date);
-    const [status, setStatus] = useState(vaccine.status);
 
-      const handleSubmit = () => {
-    const updatedVaccine = {
-      ...vaccine,
-      due_date: dueDate,
-      status: status,
-    };
+function UpdateDialog(props) {
 
-    onSave(updatedVaccine);   // ✅ This will work now
-    onClose();
-  };
+    const [date, setDate] = useState(props.vaccine.administered_date || "");
+    const [status, setStatus] = useState(props.vaccine.status);
+    const[confirmStatus , setConfirm]=useState(true);
+
+
+
+  useEffect(() => {
+      setDate(props.vaccine.administered_date || "");
+      setStatus(props.vaccine.status);
+    }, [props.vaccine]);
+
+
+
+  const handleSubmit = async () => {
+      const token = localStorage.getItem("access_token");
+
+      const payload = {
+        update_date: status === "COMPLETED" && date !== "" ? date : null,
+        new_status: status,
+        confirm: true,
+      };
+
+      const res = await fetch(`${BASE_URL}/plan/${props.vaccine.plan_id}/update`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+
+
+      });
+
+      const updatedVaccine = await res.json();
+      console.log("UPDATED RESPONSE:", updatedVaccine);
+
+      props.onSave(updatedVaccine);  // ✅ updates table
+                 // ✅ closes modal
+
+ };
+
+  
+        
+   
 
 
     return (
         <div style={overlayStyle}>
             <div style={boxStyle}>
                 <h3>Update Vaccine</h3>
-
+{/* 
                 <input type="date"
                        value={date}
                        onChange={(e) => setDate(e.target.value)} />
@@ -35,11 +70,33 @@ function UpdateDialog({ vaccine,onSave, onClose}) {
                     <option>COMPLETED</option>
                 </select>
 
-                <br /><br />
+                <br /><br /> */}
+
+
+                <select
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <option value="PENDING">PENDING</option>
+                    <option value="COMPLETED">COMPLETED</option>
+                  </select>
+
+                  <br /><br />
+
+                  {status === "COMPLETED" && (
+                    <>
+                      <input
+                        type="date"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                      />
+                      <br /><br />
+                    </>
+                    )}
 
                 <button onClick={handleSubmit}>Save</button>
 
-                <button onClick={onClose}>Cancel</button>
+                <button onClick={props.onClose}>Cancel</button>
 
 
             </div>

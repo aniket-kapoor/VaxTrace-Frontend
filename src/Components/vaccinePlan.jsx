@@ -3,12 +3,13 @@ import UpdateDialog from "./UpdateVaccineModal";
 
 function VaccineList({ vaccines }) {
   const [showDialog, setShowDialog] = useState(false);
+  const[vaccineList , setVaccineList]=useState(vaccines);
 
-  const [vaccineList, setVaccineList] = useState(vaccines);
+  const [currentVaccine, setCurrentVaccine] = useState(null);
 
   const handleSave = (updatedVaccine) => {
   const updatedList = vaccineList.map((v) =>
-    v.id === updatedVaccine.id ? updatedVaccine : v
+    v.plan_id === updatedVaccine.plan_id ? { ...v, ...updatedVaccine }   : v
   );
 
   setVaccineList(updatedList);
@@ -19,7 +20,7 @@ function VaccineList({ vaccines }) {
     <div style={{ marginTop: "20px" }}>
       <h3>Vaccination Plan</h3>
 
-      {vaccines.length === 0 ? (
+      {vaccineList.length === 0 ? (
         <p>No vaccines found</p>
       ) : (
         <>
@@ -36,7 +37,7 @@ function VaccineList({ vaccines }) {
             </thead>
 
             <tbody>
-              {vaccines.map((vaccine, index) => (
+              {vaccineList.map((vaccine, index) => (
                 <tr key={index}>
                   <td>{vaccine.vaccine_name}</td>
                   <td>{vaccine.dose_number}</td>
@@ -45,7 +46,7 @@ function VaccineList({ vaccines }) {
                   <td>{vaccine.status}</td>
                   <td>
                     <button onClick={() =>{
-                      setSelectedVaccine(vaccine);
+                      setCurrentVaccine(vaccine);
                       setShowDialog(true);
                     } }>
                       Update
@@ -57,7 +58,7 @@ function VaccineList({ vaccines }) {
           </table>
 
           {showDialog && (
-            <UpdateDialog   vaccine={selectedVaccine} 
+            <UpdateDialog   vaccine={currentVaccine} 
                             onSave={handleSave}
                             onClose={() => setShowDialog(false)} />
           )}
