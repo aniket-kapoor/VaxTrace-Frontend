@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { BASE_URL } from "../config/api";
+import {useAuth}  from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
+
+    const navigate = useNavigate();
+
+    const { login } = useAuth();
+
 
     const [loginData, setLoginData] = useState({
         email: "",
@@ -16,7 +24,6 @@ function Login() {
             [name]: value,
         }));
     };
-
 
 
 
@@ -38,21 +45,28 @@ function Login() {
 
             const data = await response.json();
 
+
             if (!response.ok) {
                 throw new Error(data.detail || "Login failed");
             }
 
-            // Save token
-            localStorage.setItem("access_token", data.access_token);
+            // Save token 
+            login(data.access_token,data.role);  //data for useAuth
 
             console.log("Login successful");
+
+             if (data.role === "worker") {
+                    navigate("/worker/plans");
+                    } else if (data.role === "parent") {
+                    navigate("/parent/plans");
+                    }
+
+
+
         } catch (error) {
             console.error("Login error:", error.message);
         }
     };
-
-
-
 
 
     return (

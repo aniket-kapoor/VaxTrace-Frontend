@@ -1,7 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import  { useState, useRef, useEffect } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+
+
+import { useAuth } from "../context/AuthContext";
+
 
 function Navbar() {
+
+
+  const { role , logout } = useAuth();
+  const navigate = useNavigate(); 
+
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRef = useRef(null);
 
@@ -25,8 +35,24 @@ function Navbar() {
     setOpenDropdown((prev) => (prev === dropdownName ? null : dropdownName));
   };
 
+
+  const handleLogout = () => {
+        logout();              // clears context + localStorage
+        setOpenDropdown(null); // close dropdown
+        navigate("/login");    // redirect to login
+      };
+
+
+
+
+
+
   return (
     <nav style={styles.navbar}>
+
+
+      {!role && (
+      <>
       {/* Logo */}
       <div style={styles.logoContainer}>
         <h2 style={styles.logo}>
@@ -42,6 +68,143 @@ function Navbar() {
             Home
           </Link>
         </li>
+
+      
+
+        <li>
+          <Link
+            to="/login"
+            style={styles.link}
+            onClick={() => setOpenDropdown(null)}
+          >
+            Login
+          </Link>
+        </li>
+
+        
+        <li>
+          <Link
+            to="/Signup"
+            style={styles.link}
+            onClick={() => setOpenDropdown(null)}
+          >
+            Signup
+          </Link>
+        </li>
+
+          <li>
+          <Link
+            to="/about"
+            style={styles.link}
+            onClick={() => setOpenDropdown(null)}
+          >
+            About
+          </Link>
+        </li>
+
+        </ul>
+      </>
+
+      )}
+
+      {/* )} */}
+
+
+
+
+
+
+      {role === "parent" && (
+      <>
+
+
+      {/* Links */}
+      <ul style={styles.navLinks} ref={dropdownRef}>
+        {/* Home */}
+
+         <li>
+          <Link to="/" style={styles.link} onClick={() => setOpenDropdown(null)}>
+            Home
+          </Link>
+        </li>
+
+
+
+        <li>
+          <Link to="/parent/dashboard" style={styles.link} onClick={() => setOpenDropdown(null)}>
+            Dashboard
+          </Link>
+        </li>
+
+
+        {/* Vaccine Schedule */}
+        <li>
+          <Link
+            to="/plans"
+            style={styles.link}
+            onClick={() => setOpenDropdown(null)}
+          >
+            Vaccine Schedule
+          </Link>
+        </li>
+
+        {/* ✅ Profile Dropdown */}
+        <li style={styles.dropdownWrapper}>
+          <span
+            style={styles.profileButton}
+            onClick={() => handleDropdownClick("profile")}
+          >
+            Profile ⬇
+          </span>
+
+          {openDropdown === "profile" && (
+            <div style={styles.dropdownMenuRight}>
+              <Link
+                to="/my-account"
+                style={styles.dropdownItem}
+                onClick={() => setOpenDropdown(null)}
+              >
+                My Account
+              </Link>
+
+              <Link
+                to="/logout"
+                style={styles.dropdownItem}
+                onClick={() => setOpenDropdown(null)}
+              >
+                Logout
+              </Link>
+            </div>
+          )}
+        </li>
+      </ul>
+      </>
+
+      )}
+
+
+
+
+
+
+
+
+      
+      {role === "worker" && (
+      <>
+    
+      
+
+      {/* Links */}
+      <ul style={styles.navLinks} ref={dropdownRef}>
+
+
+         <li>
+          <Link to="/" style={styles.link} onClick={() => setOpenDropdown(null)}>
+            Home
+          </Link>
+        </li>
+
 
         {/* ✅ Patients Dropdown */}
         <li style={styles.dropdownWrapper}>
@@ -111,17 +274,33 @@ function Navbar() {
                 My Account
               </Link>
 
-              <Link
+              {/* <Link
                 to="/logout"
                 style={styles.dropdownItem}
                 onClick={() => setOpenDropdown(null)}
               >
-                Logout
-              </Link>
+                <button onClick={logout}>Logout</button>
+              </Link> */}
+
+              <button
+                  style={styles.dropdownItem}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+
+                            
+
             </div>
           )}
         </li>
       </ul>
+      </>
+
+      )}
+
+
+
     </nav>
   );
 }
