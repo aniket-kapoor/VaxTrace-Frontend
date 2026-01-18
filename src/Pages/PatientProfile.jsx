@@ -1,0 +1,88 @@
+import { useState } from "react"
+import PatientInfo from "../Components/patientInfo";
+import VaccineList from "../Components/vaccinePlan";
+import { BASE_URL } from "../config/api";
+
+
+function PatientProfile() {
+
+    const [patientId, setPatientId] = useState("");
+    const [plan, setPlan] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+
+
+
+    const fetchPlan = async () => {
+
+        const token = localStorage.getItem("access_token");
+
+        if (!patientId) {
+            setError("Enter patient id")
+            return;
+        }
+
+        try {
+            setLoading(true);
+            setError("");
+
+            const response = await fetch(
+                `${BASE_URL}/get/patients/${patientId}/plan`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}` 
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Patient Not Found");
+            }
+
+            const data = await response.json();
+            setPlan(data);
+
+        }
+
+        catch (err) {
+
+            setError(err.message);
+            setPlan(null);
+
+        }
+
+        finally {
+             setLoading(false);
+
+        }
+    }
+
+
+    return (
+        <div>
+            <h2> Search Patient Profile</h2>
+
+            <input type="text"
+                value={patientId}
+                placeholder="Enter patient id"
+                onChange={(e) => setPatientId(e.target.value)}
+            />
+            <button onClick={fetchPlan}>Get MCP Card</button>
+
+            {loading && <p>Loading...</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
+            {plan && (
+                <>
+                 <PatientInfo plan={plan} />
+                </>
+            )}
+
+        </div>
+    )
+}
+
+export default PatientProfile
