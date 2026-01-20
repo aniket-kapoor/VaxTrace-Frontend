@@ -4,10 +4,10 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [role, setRole] = useState(localStorage.getItem("role"));
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(localStorage.getItem("access_token"));
 
   const login = (token, role) => {
-    localStorage.setItem("token", token);
+    localStorage.setItem("access_token", token);
     localStorage.setItem("role", role);
     setToken(token);
     setRole(role);

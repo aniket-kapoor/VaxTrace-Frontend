@@ -84,7 +84,7 @@ function Navbar() {
         
         <li>
           <Link
-            to="/Signup"
+            to="/signup"
             style={styles.link}
             onClick={() => setOpenDropdown(null)}
           >
@@ -140,7 +140,7 @@ function Navbar() {
         {/* Vaccine Schedule */}
         <li>
           <Link
-            to="/plans"
+            to="parent/plans"
             style={styles.link}
             onClick={() => setOpenDropdown(null)}
           >
@@ -167,13 +167,14 @@ function Navbar() {
                 My Account
               </Link>
 
-              <Link
-                to="/logout"
-                style={styles.dropdownItem}
-                onClick={() => setOpenDropdown(null)}
-              >
-                Logout
-              </Link>
+              
+              <button
+                  style={styles.dropdownItem}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+
             </div>
           )}
         </li>
@@ -218,7 +219,7 @@ function Navbar() {
           {openDropdown === "patients" && (
             <div style={styles.dropdownMenu}>
               <Link
-                to="/create/patient"
+                to="/worker/create/patient"
                 style={styles.dropdownItem}
                 onClick={() => setOpenDropdown(null)}
               >
@@ -226,7 +227,7 @@ function Navbar() {
               </Link>
 
               <Link
-                to="/search/patient"
+                to="/search/profile/patient"
                 style={styles.dropdownItem}
                 onClick={() => setOpenDropdown(null)}
               >
@@ -247,7 +248,7 @@ function Navbar() {
         {/* Vaccine Schedule */}
         <li>
           <Link
-            to="/plans"
+            to="/worker/plans"
             style={styles.link}
             onClick={() => setOpenDropdown(null)}
           >

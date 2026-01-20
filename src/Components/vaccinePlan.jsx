@@ -7,6 +7,11 @@ function VaccineList({ vaccines }) {
 
   const [currentVaccine, setCurrentVaccine] = useState(null);
 
+   
+
+
+
+
   const handleSave = (updatedVaccine) => {
   const updatedList = vaccineList.map((v) =>
     v.plan_id === updatedVaccine.plan_id ? { ...v, ...updatedVaccine }   : v
@@ -14,6 +19,9 @@ function VaccineList({ vaccines }) {
 
   setVaccineList(updatedList);
 };
+
+
+
 
 
   return (
@@ -39,11 +47,21 @@ function VaccineList({ vaccines }) {
             <tbody>
               {vaccineList.map((vaccine, index) => (
                 <tr key={index}>
+                  <td>{index + 1}</td>
                   <td>{vaccine.vaccine_name}</td>
                   <td>{vaccine.dose_number}</td>
                   <td>{vaccine.due_date}</td>
                   <td>{vaccine.administered_date}</td>
-                  <td>{vaccine.status}</td>
+                  <td>
+                    {vaccine.status === "MISSED" ? (
+                      <span style={{ color: "red", fontWeight: "bold" }}>⛔</span>
+                    ) : vaccine.status === "COMPLETED" ? (
+                      "✅"
+                    ) : (
+                      "PENDING"
+                    )}
+                  </td>
+
                   <td>
                     <button onClick={() =>{
                       setCurrentVaccine(vaccine);

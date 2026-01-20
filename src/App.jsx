@@ -6,6 +6,9 @@ import CreatePatient from "./Pages/CreatePatient";
 import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
+import Dashboard from "./Pages/Dashboard";
+import ParentPlans from "./Pages/ParentPlans";
+import PatientProfile from "./Pages/PatientProfile";
 
 
 import { useLocation } from "react-router-dom";
@@ -34,7 +37,12 @@ function App() {
 
       {/* Parent's Routes */}
       <Route path="/parent/plans" element={ <ProtectedRoute allowedRole="parent">
-                                          <Plans/>
+                                          <ParentPlans/>
+                                          </ProtectedRoute>
+                                          }></Route>
+
+      <Route path="/parent/dashboard" element={ <ProtectedRoute allowedRole="parent">
+                                          <Dashboard/>
                                           </ProtectedRoute>
                                           }></Route>
 
@@ -46,8 +54,13 @@ function App() {
                                 </ProtectedRoute>
                                 } > </Route>
 
-      <Route path="/worker/plans" element={ <ProtectedRoute allowedRole="worker">
+      <Route path="/worker/create/patient" element={ <ProtectedRoute allowedRole="worker">
                                     <CreatePatient/>
+                                </ProtectedRoute>
+                                } > </Route>
+
+      <Route path="/search/profile/patient" element={ <ProtectedRoute allowedRole="worker">
+                                    <PatientProfile/>
                                 </ProtectedRoute>
                                 } > </Route>
 

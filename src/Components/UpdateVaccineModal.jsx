@@ -11,15 +11,28 @@ function UpdateDialog(props) {
     const[confirmStatus , setConfirm]=useState(true);
 
 
-
   useEffect(() => {
       setDate(props.vaccine.administered_date || "");
       setStatus(props.vaccine.status);
     }, [props.vaccine]);
 
 
+  
+  const today = new Date().toISOString().split("T")[0];
+
+
 
   const handleSubmit = async () => {
+
+     if (status === "COMPLETED" && date === "") {
+      alert("Please select administered date!");
+      return;
+    }
+
+      if (status === "COMPLETED" && date > today) {
+      alert("Future date is not allowed!");
+      return;
+    }
       const token = localStorage.getItem("access_token");
 
       const payload = {
@@ -27,6 +40,7 @@ function UpdateDialog(props) {
         new_status: status,
         confirm: true,
       };
+
 
       const res = await fetch(`${BASE_URL}/plan/${props.vaccine.plan_id}/update`, {
         method: "PUT",
@@ -56,29 +70,15 @@ function UpdateDialog(props) {
         <div style={overlayStyle}>
             <div style={boxStyle}>
                 <h3>Update Vaccine</h3>
-{/* 
-                <input type="date"
-                       value={date}
-                       onChange={(e) => setDate(e.target.value)} />
-                        <br /><br />
-
-                <select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                >
-                    <option>PENDING</option>
-                    <option>COMPLETED</option>
-                </select>
-
-                <br /><br /> */}
 
 
                 <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="PENDING">PENDING</option>
-                    <option value="COMPLETED">COMPLETED</option>
+                      <option value="PENDING">⏳ Pending</option>
+                      <option value="COMPLETED">✅ Completed</option>
+                      <option value="MISSED">⛔ Missed</option>
                   </select>
 
                   <br /><br />
@@ -88,6 +88,7 @@ function UpdateDialog(props) {
                       <input
                         type="date"
                         value={date}
+                         max={today}
                         onChange={(e) => setDate(e.target.value)}
                       />
                       <br /><br />
