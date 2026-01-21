@@ -1,5 +1,6 @@
 import React from "react";
 import AboutSection from "../components/AboutSection";
+import VaccineScheduleSection from "./Plans";
 
 const Home = () => {
   const awarenessData = [
@@ -106,7 +107,9 @@ const Home = () => {
         </div>
       </div>
     </section>
+     <VaccineScheduleSection />
      <AboutSection/>
+     
     </>
   );
 };

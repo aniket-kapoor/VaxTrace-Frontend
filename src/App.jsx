@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import About from "./pages/About";
 import CreatePatient from "./pages/CreatePatient";
+import McpCard from "./pages/Schedule";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -29,6 +30,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        <Route path="/mcp-card" element={<McpCard />} />
 
 
         <Route path="/worker/create/patient" element={

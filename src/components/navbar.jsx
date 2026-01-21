@@ -179,13 +179,14 @@ const { role , logout } = useAuth();
                 </li>
 
    <li>
-                  <Link
-                    to="/worker/plans"
+                  <a
+                    href="#schedule"
                     className="hover:text-green-900 transition duration-200"
                     onClick={() => setOpenDropdown(null)}
                   >
                     Vaccine Schedule
-                  </Link>
+                  </a>
+
                 </li>
 <li className="relative">
                   <button
