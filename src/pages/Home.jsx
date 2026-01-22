@@ -1,8 +1,12 @@
 import React from "react";
 import AboutSection from "../components/AboutSection";
 import VaccineScheduleSection from "./Plans";
+import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
+
+  const navigate = useNavigate();
   const awarenessData = [
     {
       title: "Timely Vaccination",
@@ -46,9 +50,12 @@ const Home = () => {
 
             {/* CTA Buttons */}
             <div className="flex items-center gap-4">
-              <button className="px-6 py-3 rounded-xl bg-green-600 text-white font-semibold shadow hover:bg-green-700 transition duration-200">
-                Get Started
-              </button>
+              <button
+              onClick={() => navigate("/worker/applications")}
+              className="px-6 py-3 rounded-xl bg-green-600 text-white font-semibold shadow hover:bg-green-700 transition duration-200"
+            >
+              Applications
+            </button>
 
               <button className="px-6 py-3 rounded-xl border border-green-600 text-green-700 font-semibold shadow-sm hover:bg-green-600 hover:text-white transition duration-200">
                 View Features

@@ -8,6 +8,7 @@ import CreatePatient from "./pages/CreatePatient";
 import McpCard from "./pages/Schedule";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import PendingApplications from "./pages/Applications";
 
 // Pages (create these files later)
 
@@ -38,6 +39,13 @@ function App() {
                                                  <ProtectedRoute allowedRole="worker">
                                                   <CreatePatient />
                                                   </ProtectedRoute>} />
+
+        <Route path="/worker/applications" element={
+                                                 <ProtectedRoute allowedRole="worker">
+                                                  <PendingApplications />
+                                                  </ProtectedRoute>} />
+
+              
 
 
 
