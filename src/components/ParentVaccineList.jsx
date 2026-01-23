@@ -1,9 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import UpdateDialog from "./UpdateVaccine";
 
-function VaccineList({ plan }) {
-  const [showDialog, setShowDialog] = useState(false);
-  const [currentVaccine, setCurrentVaccine] = useState(null);
+function ParentVaccineList({ plan }) {
   const [vaccineList, setVaccineList] = useState([]);
 
   useEffect(() => {
@@ -17,9 +14,7 @@ function VaccineList({ plan }) {
   // ✅ find nearest upcoming due date (>= today) among NOT completed vaccines
   const nextUpcomingPlanId = useMemo(() => {
     const upcoming = vaccineList
-      .filter(
-        (v) => v?.due_date && v.due_date >= today && v.status !== "COMPLETED"
-      )
+      .filter((v) => v?.due_date && v.due_date >= today && v.status !== "COMPLETED")
       .sort((a, b) => a.due_date.localeCompare(b.due_date));
 
     return upcoming[0]?.plan_id || null;
@@ -29,46 +24,38 @@ function VaccineList({ plan }) {
   const getRowType = (vaccine) => {
     const due = vaccine?.due_date;
 
+    // if already completed → no missed logic
     if (vaccine.status === "COMPLETED") return "COMPLETED";
 
-    // ✅ auto highlight missed (due date passed but not completed)
+    // if due date exists and passed → missed
     if (due && due < today) return "MISSED";
 
-    // ✅ nearest upcoming due
+    // nearest upcoming due → green highlight
     if (vaccine.plan_id === nextUpcomingPlanId) return "NEXT";
 
     return "NORMAL";
   };
 
-  // ✅ status display override (worker can still update)
+  // ✅ status override for parents
   const getDisplayStatus = (vaccine) => {
     const rowType = getRowType(vaccine);
 
-    // only UI show MISSED if overdue and not completed
     if (rowType === "MISSED") return "MISSED";
-
     return vaccine.status || "PENDING";
-  };
-
-  const handleSave = (updatedVaccine) => {
-    const updatedList = vaccineList.map((v) =>
-      v.plan_id === updatedVaccine.plan_id ? { ...v, ...updatedVaccine } : v
-    );
-    setVaccineList(updatedList);
   };
 
   const infoCards = [
     {
-      title: "Update Status",
-      desc: "Click Update to change vaccine status or administered date.",
+      title: "Green Row = Next Vaccine",
+      desc: "This is the nearest upcoming due vaccine. Prioritize this one.",
     },
     {
-      title: "Color Guide",
-      desc: "Green = next upcoming due vaccine, Red = overdue vaccine.",
+      title: "Red Row = Missed",
+      desc: "Due date passed and vaccine is not completed. Consult healthcare worker.",
     },
     {
-      title: "Pending vs Completed",
-      desc: "Pending vaccines are due. Completed means already administered.",
+      title: "Completed ✅",
+      desc: "Already administered vaccine. No action required.",
     },
   ];
 
@@ -108,10 +95,9 @@ function VaccineList({ plan }) {
 
           {/* ✅ Instructions Title */}
           <h3 className="text-xl font-extrabold text-green-900">
-            Update Instructions
+            Important Notes
           </h3>
 
-          {/* ✅ Instruction Cards */}
           {infoCards.map((card, index) => (
             <div
               key={index}
@@ -128,7 +114,7 @@ function VaccineList({ plan }) {
           <div className="bg-white rounded-3xl shadow-lg border border-green-100 p-6 md:p-8">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <h3 className="text-2xl font-extrabold text-green-900">
-                Vaccination Plan
+                Vaccination Schedule
               </h3>
 
               <p className="text-sm text-green-700 font-semibold">
@@ -154,9 +140,8 @@ function VaccineList({ plan }) {
                       <th className="px-4 py-3 text-sm font-bold">Dose</th>
                       <th className="px-4 py-3 text-sm font-bold">Due Date</th>
                       <th className="px-4 py-3 text-sm font-bold">Given On</th>
-                      <th className="px-4 py-3 text-sm font-bold">Status</th>
                       <th className="px-4 py-3 text-sm font-bold rounded-r-xl">
-                        Action
+                        Status
                       </th>
                     </tr>
                   </thead>
@@ -166,7 +151,7 @@ function VaccineList({ plan }) {
                       const rowType = getRowType(vaccine);
                       const displayStatus = getDisplayStatus(vaccine);
 
-                      // ✅ Row color styling like parents view
+                      // ✅ row styling
                       const rowClass =
                         rowType === "MISSED"
                           ? "bg-red-50 hover:bg-red-100/60 border-b border-red-200"
@@ -214,34 +199,12 @@ function VaccineList({ plan }) {
                               </span>
                             )}
                           </td>
-
-                          {/* ✅ Keep Update Button */}
-                          <td className="px-4 py-4">
-                            <button
-                              onClick={() => {
-                                setCurrentVaccine(vaccine);
-                                setShowDialog(true);
-                              }}
-                              className="px-4 py-2 rounded-xl bg-green-600 text-white font-semibold shadow hover:bg-green-700 transition duration-200"
-                            >
-                              Update
-                            </button>
-                          </td>
                         </tr>
                       );
                     })}
                   </tbody>
                 </table>
               </div>
-            )}
-
-            {/* Dialog */}
-            {showDialog && (
-              <UpdateDialog
-                vaccine={currentVaccine}
-                onSave={handleSave}
-                onClose={() => setShowDialog(false)}
-              />
             )}
           </div>
         </div>
@@ -250,4 +213,4 @@ function VaccineList({ plan }) {
   );
 }
 
-export default VaccineList;
+export default ParentVaccineList;

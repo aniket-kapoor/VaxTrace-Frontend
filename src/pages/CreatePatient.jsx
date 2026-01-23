@@ -221,6 +221,7 @@ function CreatePatient() {
                       name="dob"
                       value={patientInfo.dob}
                       onChange={handleChange}
+                      max={new Date().toISOString().split("T")[0]}   // ✅ only past dates allowed
                       required
                       className="px-4 py-3 rounded-xl border border-green-200 outline-none focus:ring-2 focus:ring-green-400"
                     />

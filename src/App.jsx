@@ -9,12 +9,15 @@ import McpCard from "./pages/Schedule";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import PendingApplications from "./pages/Applications";
+import HomeParent from "./pages/HomeParent";
+import SelfRegistration from "./pages/selfRegistration";
+import ApplicationStatusPage from "./pages/ParentApplications";
+import VaccineScheduleSectionParent from "./pages/PlansParents";
+import ParentMcpCard from "./pages/ParentMcpCard";
+import Signup from "./pages/Signup";
+import AboutSection from "./components/AboutSection";
 
-// Pages (create these files later)
 
-
-
-const Signup = () => <h1 className="p-10">Signup Page</h1>;
 
 function App() {
 
@@ -43,6 +46,45 @@ function App() {
         <Route path="/worker/applications" element={
                                                  <ProtectedRoute allowedRole="worker">
                                                   <PendingApplications />
+                                                  </ProtectedRoute>} />
+
+
+
+        <Route path="/parent/home" element={
+                                                 <ProtectedRoute allowedRole="parent">
+                                                  <HomeParent />
+                                                  </ProtectedRoute>} />
+
+
+        <Route path="/parent/sefRegistration" element={
+                                                 <ProtectedRoute allowedRole="parent">
+                                                  <SelfRegistration />
+                                                  </ProtectedRoute>} />
+
+
+        <Route path="/parent/application/status" element={
+                                                 <ProtectedRoute allowedRole="parent">
+                                                  <ApplicationStatusPage />
+                                                  </ProtectedRoute>} />
+
+        
+        <Route path="vaccine/plan/shcedule" element={
+                                                 <ProtectedRoute allowedRole="parent">
+                                                  <VaccineScheduleSectionParent />
+                                                  </ProtectedRoute>} />
+
+        <Route
+          path="/parent/mcp-card"
+          element={
+            <ProtectedRoute allowedRole="parent">
+              <ParentMcpCard />
+            </ProtectedRoute>
+          }
+        />
+
+         <Route path="parent/about" element={
+                                                 <ProtectedRoute allowedRole="parent">
+                                                  <AboutSection />
                                                   </ProtectedRoute>} />
 
               
