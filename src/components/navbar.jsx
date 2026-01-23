@@ -233,6 +233,109 @@ const { role , logout } = useAuth();
 
 
 
+
+
+
+
+   {role === "parent" &&(
+      <div className="max-w-7xl mx-auto px-10 py-4 flex items-center">
+  
+  {/* Left: Healthcare Logo */}
+  <h2 className="text-2xl font-bold text-green-700">
+    Healthcare
+  </h2>
+
+  {/* Middle: Links (shift left by controlling margin) */}
+
+  <div className="flex-1 flex justify-center">
+  <ul className="flex items-center gap-8 font-medium text-green-700 ml-12">
+    <li>
+      <Link
+        to="/"
+        className="hover:text-green-900 transition duration-200"
+      >
+        Home
+      </Link>
+    </li>
+
+
+      <li>
+                  <a
+                    href="#schedule"
+                    className="hover:text-green-900 transition duration-200"
+                    onClick={() => setOpenDropdown(null)}
+                  >
+                    Next Dues Dates
+                  </a>
+
+                </li>
+
+
+     
+
+            <li>
+                  <a
+                    href="#schedule"
+                    className="hover:text-green-900 transition duration-200"
+                    onClick={() => setOpenDropdown(null)}
+                  >
+                    Vaccine Schedule
+                  </a>
+
+                </li>
+
+
+
+<li className="relative">
+                  <button
+                    onClick={() => handleDropdownClick("profile")}
+                    className="px-4 py-2 rounded-lg bg-green-600 text-white shadow hover:bg-green-700 transition duration-200 flex items-center gap-2"
+                  >
+                    Profile <span className="text-sm">▼</span>
+                  </button>
+
+                  {openDropdown === "profile" && (
+                    <div className="absolute right-0 mt-3 w-48 bg-white border border-green-100 rounded-2xl shadow-lg overflow-hidden">
+                      <Link
+                        to="/my-account"
+                        onClick={() => setOpenDropdown(null)}
+                        className="block px-5 py-3 text-green-800 hover:bg-green-50 transition"
+                      >
+                        My Account
+                      </Link>
+
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-5 py-3 text-red-600 hover:bg-red-50 transition"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </li>
+
+  </ul>
+  </div>
+
+  {/* Right: Government Software Badge (always right-most) */}
+  <div className="ml-auto flex items-center gap-2 px-4 py-2 rounded-xl bg-green-100 border border-green-300 shadow-sm">
+    <span className="w-3 h-3 rounded-full bg-green-600"></span>
+    <p className="text-sm font-semibold text-green-700">
+      Government Software
+    </p>
+  </div>
+
+  </div>
+
+  )}
+
+
+
+
+
+
+
+
     </nav>
   );
 };
