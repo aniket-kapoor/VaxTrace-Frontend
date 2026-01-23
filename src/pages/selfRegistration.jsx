@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BASE_URL } from "../config/api";
 
-function CreatePatient() {
+function SelfRegistration () {
   const [patientInfo, setPatientInfo] = useState({
     name: "",
     gender: "",
@@ -63,7 +63,7 @@ function CreatePatient() {
       formData.append("Address", patientInfo.address); // ✅ exact casing
       formData.append("dob_document", dobDocument); // ✅ file field
 
-      const response = await fetch(`${BASE_URL}/patients/createPatient`, {
+      const response = await fetch(`${BASE_URL}/parent/patient/selfRegistration`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`, // ✅ Don't set Content-Type manually
@@ -74,12 +74,12 @@ function CreatePatient() {
       const data = await response.json();
 
       if (!response.ok) {
-        console.error("Backend validation error:", data);
-        alert("Validation error. Check console.");
-        return;
-      }
+  console.log("Backend error full:", data);
+  alert(JSON.stringify(data, null, 2));
+  return;
+}
 
-      alert("Patient created successfully ✅");
+      alert("Application submitted Successfully ✅");
 
       // clear form
       setPatientInfo({
@@ -131,15 +131,15 @@ function CreatePatient() {
         {/* Heading */}
         <div className="mb-10">
           <p className="inline-block px-4 py-2 rounded-full bg-green-100 text-green-700 font-semibold border border-green-200 shadow-sm">
-            Worker Panel
+           Application
           </p>
 
           <h1 className="text-3xl md:text-4xl font-extrabold text-green-900 mt-4">
-            Create Patient Account
+            Register your child
           </h1>
 
           <p className="text-green-800/80 mt-2 max-w-3xl">
-            Register a patient in the VaxTrace system to track vaccination records
+            Register your children in the VaxTrace system to track vaccination records
             and send reminders to parents automatically.
           </p>
         </div>
@@ -167,7 +167,7 @@ function CreatePatient() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-3xl shadow-lg border border-green-100 p-6 md:p-8">
               <h2 className="text-2xl font-extrabold text-green-900">
-                Patient Registration Form
+                Child Registration Form
               </h2>
               <p className="text-green-800/70 mt-1">
                 Fill all required fields carefully.
@@ -379,7 +379,7 @@ function CreatePatient() {
                   type="submit"
                   className="w-full py-3 rounded-2xl bg-green-600 text-white font-bold shadow hover:bg-green-700 transition duration-200"
                 >
-                  Create Patient Account
+                  Submit Application
                 </button>
               </form>
             </div>
@@ -390,4 +390,4 @@ function CreatePatient() {
   );
 }
 
-export default CreatePatient;
+export default SelfRegistration;

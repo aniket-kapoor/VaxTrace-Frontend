@@ -251,7 +251,7 @@ const { role , logout } = useAuth();
   <ul className="flex items-center gap-8 font-medium text-green-700 ml-12">
     <li>
       <Link
-        to="/"
+        to="/parent/home"
         className="hover:text-green-900 transition duration-200"
       >
         Home
@@ -265,25 +265,24 @@ const { role , logout } = useAuth();
                     className="hover:text-green-900 transition duration-200"
                     onClick={() => setOpenDropdown(null)}
                   >
-                    Next Dues Dates
+                    Next Due Dates
                   </a>
 
                 </li>
+
+                 <li>
+      <Link
+        to="/parent/about"
+        className="hover:text-green-900 transition duration-200"
+      >
+        About
+      </Link>
+    </li>
+
+                
 
 
      
-
-            <li>
-                  <a
-                    href="#schedule"
-                    className="hover:text-green-900 transition duration-200"
-                    onClick={() => setOpenDropdown(null)}
-                  >
-                    Vaccine Schedule
-                  </a>
-
-                </li>
-
 
 
 <li className="relative">
