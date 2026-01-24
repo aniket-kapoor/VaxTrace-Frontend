@@ -83,7 +83,7 @@ const Login = () => {
         if (data.role === "worker") {
           navigate("/");
         } else if (data.role === "parent") {
-          navigate("/parent/plans");
+          navigate("/parent/home");
         } else {
           navigate("/");
         }

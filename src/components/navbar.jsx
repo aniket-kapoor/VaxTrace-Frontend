@@ -66,12 +66,12 @@ const { role , logout } = useAuth();
   <div className="flex-1 flex justify-center">
   <ul className="flex items-center gap-8 font-medium text-green-700 ml-12">
     <li>
-      <Link
-        to="/"
+      <a
+        href="/"
         className="hover:text-green-900 transition duration-200"
       >
         Home
-      </Link>
+      </a>
     </li>
 
     <li>
@@ -133,12 +133,12 @@ const { role , logout } = useAuth();
   <div className="flex-1 flex justify-center">
   <ul className="flex items-center gap-8 font-medium text-green-700 ml-12">
     <li>
-      <Link
-        to="/"
+      <a
+        href="/worker/home"
         className="hover:text-green-900 transition duration-200"
       >
         Home
-      </Link>
+      </a>
     </li>
 
       <li className="relative">
@@ -172,7 +172,7 @@ const { role , logout } = useAuth();
                         onClick={() => setOpenDropdown(null)}
                         className="block px-5 py-3 text-green-800 hover:bg-green-50 transition"
                       >
-                        Deactivate Patient Account
+                        Deactivate Patient Account (Soon)
                       </Link>
                     </div>
                   )}
@@ -199,7 +199,7 @@ const { role , logout } = useAuth();
                   {openDropdown === "profile" && (
                     <div className="absolute right-0 mt-3 w-48 bg-white border border-green-100 rounded-2xl shadow-lg overflow-hidden">
                       <Link
-                        to="/my-account"
+                        to="/worker/myaccount"
                         onClick={() => setOpenDropdown(null)}
                         className="block px-5 py-3 text-green-800 hover:bg-green-50 transition"
                       >
@@ -250,12 +250,12 @@ const { role , logout } = useAuth();
   <div className="flex-1 flex justify-center">
   <ul className="flex items-center gap-8 font-medium text-green-700 ml-12">
     <li>
-      <Link
-        to="/parent/home"
+      <a
+        href="/parent/home"
         className="hover:text-green-900 transition duration-200"
       >
         Home
-      </Link>
+      </a>
     </li>
 
 
@@ -271,12 +271,12 @@ const { role , logout } = useAuth();
                 </li>
 
                  <li>
-      <Link
-        to="/parent/about"
+      <a
+        href="/parent/about"
         className="hover:text-green-900 transition duration-200"
       >
         About
-      </Link>
+      </a>
     </li>
 
                 
@@ -296,7 +296,7 @@ const { role , logout } = useAuth();
                   {openDropdown === "profile" && (
                     <div className="absolute right-0 mt-3 w-48 bg-white border border-green-100 rounded-2xl shadow-lg overflow-hidden">
                       <Link
-                        to="/my-account"
+                        to="/parent/myaccount"
                         onClick={() => setOpenDropdown(null)}
                         className="block px-5 py-3 text-green-800 hover:bg-green-50 transition"
                       >
