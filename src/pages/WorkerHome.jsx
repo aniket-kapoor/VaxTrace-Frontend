@@ -4,7 +4,7 @@ import VaccineScheduleSection from "./Plans";
 import { useNavigate } from "react-router-dom";
 
 
-const Home = () => {
+const WorkerHome = () => {
 
   const navigate = useNavigate();
   const awarenessData = [
@@ -54,7 +54,7 @@ const Home = () => {
               onClick={() => navigate("/worker/applications")}
               className="px-6 py-3 rounded-xl bg-green-600 text-white font-semibold shadow hover:bg-green-700 transition duration-200"
             >
-              Register Child
+              Applications
             </button>
 
               <a   href="#about"
@@ -117,10 +117,11 @@ const Home = () => {
         </div>
       </div>
     </section>
+    <VaccineScheduleSection/>
      <AboutSection/>
      
     </>
   );
 };
 
-export default Home;
+export default WorkerHome;
