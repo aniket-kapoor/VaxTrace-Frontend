@@ -271,12 +271,12 @@ const { role , logout } = useAuth();
                 </li>
 
                  <li>
-      <a
-        href="/parent/about"
+      <Link
+        to="/parent/about"
         className="hover:text-green-900 transition duration-200"
       >
         About
-      </a>
+      </Link>
     </li>
 
                 

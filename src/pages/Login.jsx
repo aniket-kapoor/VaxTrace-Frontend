@@ -81,7 +81,7 @@ const Login = () => {
       // ✅ Redirect after short delay (looks professional)
       setTimeout(() => {
         if (data.role === "worker") {
-          navigate("/");
+          navigate("/worker/home");
         } else if (data.role === "parent") {
           navigate("/parent/home");
         } else {
