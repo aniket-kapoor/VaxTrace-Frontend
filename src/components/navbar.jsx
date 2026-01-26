@@ -66,12 +66,12 @@ const { role , logout } = useAuth();
   <div className="flex-1 flex justify-center">
   <ul className="flex items-center gap-8 font-medium text-green-700 ml-12">
     <li>
-      <a
-        href="/"
+      <Link
+        to="/"
         className="hover:text-green-900 transition duration-200"
       >
         Home
-      </a>
+      </Link>
     </li>
 
     <li>
@@ -133,12 +133,12 @@ const { role , logout } = useAuth();
   <div className="flex-1 flex justify-center">
   <ul className="flex items-center gap-8 font-medium text-green-700 ml-12">
     <li>
-      <a
-        href="/worker/home"
+      <Link
+        to="/worker/home"
         className="hover:text-green-900 transition duration-200"
       >
         Home
-      </a>
+      </Link>
     </li>
 
       <li className="relative">
@@ -250,12 +250,12 @@ const { role , logout } = useAuth();
   <div className="flex-1 flex justify-center">
   <ul className="flex items-center gap-8 font-medium text-green-700 ml-12">
     <li>
-      <a
-        href="/parent/home"
+      <Link
+        to="/parent/home"
         className="hover:text-green-900 transition duration-200"
       >
         Home
-      </a>
+      </Link>
     </li>
 
 
