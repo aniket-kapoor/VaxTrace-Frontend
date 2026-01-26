@@ -73,6 +73,9 @@ const Login = () => {
         return;
       }
 
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("role", data.role);
+
       // ✅ Save token
       login(data.access_token, data.role);
 
