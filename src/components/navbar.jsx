@@ -75,12 +75,12 @@ const { role , logout } = useAuth();
     </li>
 
     <li>
-     <a
-        href="#about"
+     <Link
+        to="/about"
         className="hover:text-green-900 transition duration-200"
       >
         About
-      </a>
+      </Link>
     </li>
 
     <li>
@@ -179,13 +179,13 @@ const { role , logout } = useAuth();
                 </li>
 
    <li>
-                  <a
-                    href="#schedule"
+                  <Link
+                    to="/worker/patient/schedule"
                     className="hover:text-green-900 transition duration-200"
                     onClick={() => setOpenDropdown(null)}
                   >
                     Vaccine Schedule
-                  </a>
+                  </Link>
 
                 </li>
 <li className="relative">
@@ -260,13 +260,13 @@ const { role , logout } = useAuth();
 
 
       <li>
-                  <a
-                    href="#schedule"
+                  <Link
+                    to="/patient/schedule"
                     className="hover:text-green-900 transition duration-200"
                     onClick={() => setOpenDropdown(null)}
                   >
                     Next Due Dates
-                  </a>
+                  </Link>
 
                 </li>
 

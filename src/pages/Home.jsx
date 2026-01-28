@@ -2,6 +2,7 @@ import React from "react";
 import AboutSection from "../components/AboutSection";
 import VaccineScheduleSection from "./Plans";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Home = () => {
@@ -57,10 +58,10 @@ const Home = () => {
               Register Child
             </button>
 
-              <a   href="#about"
+              <Link   to="/about"
               className="px-6 py-3 rounded-xl border border-green-600 text-green-700 font-semibold shadow-sm hover:bg-green-600 hover:text-white transition duration-200">
                 About
-              </a>
+              </Link>
             </div>
 
           

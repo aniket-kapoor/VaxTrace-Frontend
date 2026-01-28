@@ -62,6 +62,13 @@ function App() {
             <MyAccount />
           </ProtectedRoute>} />
 
+        
+
+          <Route path="/worker/patient/schedule" element={
+          <ProtectedRoute allowedRole="worker">
+            <VaccineScheduleSectionParent/>
+          </ProtectedRoute>} />
+
 
 
         <Route path="/parent/home" element={
@@ -82,7 +89,7 @@ function App() {
           </ProtectedRoute>} />
 
 
-        <Route path="vaccine/plan/shcedule" element={
+        <Route path="/patient/schedule" element={
           <ProtectedRoute allowedRole="parent">
             <VaccineScheduleSectionParent />
           </ProtectedRoute>} />
@@ -96,7 +103,7 @@ function App() {
           }
         />
 
-        <Route path="parent/about" element={
+        <Route path="/parent/about" element={
           <ProtectedRoute allowedRole="parent">
             <AboutSection />
           </ProtectedRoute>} />
