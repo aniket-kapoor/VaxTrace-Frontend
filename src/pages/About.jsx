@@ -59,7 +59,7 @@ const About = () => {
             </h2>
 
             <p className="text-green-800/80 mt-2">
-              2nd Year B.Tech (CSE) Student at{" "}
+              Computer Science & Engineering Undergraduate {" "}
               <span className="font-semibold text-green-900">
                 Guru Nanak Dev University, Amritsar
               </span>
