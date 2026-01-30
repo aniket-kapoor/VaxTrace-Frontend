@@ -18,6 +18,7 @@ import Signup from "./pages/Signup";
 import AboutSection from "./components/AboutSection";
 import MyAccount from "./pages/MyAccount";
 import WorkerHome from "./pages/WorkerHome";
+import VaccineScheduleSection from "./pages/Plans";
 
 
 
@@ -37,7 +38,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/mcp-card" element={<McpCard />} />
+         <Route path="/mcp-card" element={
+          <ProtectedRoute allowedRole="worker">
+            <McpCard />
+          </ProtectedRoute>} />
 
 
         <Route path="/worker/home" element={
@@ -64,9 +68,10 @@ function App() {
 
         
 
+         
           <Route path="/worker/patient/schedule" element={
           <ProtectedRoute allowedRole="worker">
-            <VaccineScheduleSectionParent/>
+            <VaccineScheduleSection/>
           </ProtectedRoute>} />
 
 
